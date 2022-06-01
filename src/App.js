@@ -1,24 +1,70 @@
-import logo from './logo.svg';
 import './App.css';
+import { useQuery, gql } from "@apollo/client";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import IndexPage from "./pages/IndexPage"
+import ProductPageById from "./pages/ProductPageById"
+import ProductPageByHandle from "./pages/ProductPageByHandle"
+
+// const FILMS_QUERY = gql`
+//   {
+//     products(first: 250) {
+//       edges {
+//         node {
+//           handle
+//           id
+//           title
+//           descriptionHtml
+//           images(first: 250) {
+//             edges {
+//               node {
+//                 src
+//                 id
+//                 altText
+//               }
+//             }
+//           }
+//           variants(first: 250) {
+//             edges {
+//               node {
+//                 id
+//                 priceV2 {
+//                   amount
+//                   currencyCode
+//                 }
+//                 compareAtPriceV2 {
+//                   amount
+//                   currencyCode
+//                 }
+//                 selectedOptions {
+//                   name
+//                   value
+//                 }
+//                 title
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
+
 
 function App() {
+  // const { data, loading, error } = useQuery(FILMS_QUERY);
+
+  // if (loading) return "Loading...";
+  // if (error) return <pre>{error.message}</pre>
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<IndexPage />} />
+        <Route path="product" >
+          <Route path="id/:id" element={<ProductPageById />} />
+          <Route path="handle/:handle" element={<ProductPageByHandle />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
