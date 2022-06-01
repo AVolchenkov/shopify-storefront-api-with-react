@@ -29,7 +29,7 @@ const SelectVariant = (product, options) => {
     let variantString = ""
     variantArray = Object.values(variantObject)
     variantArray.reduce((acc, curr, index) => {
-      variantString = index == 0 ? curr : acc + ' / ' + curr;
+      variantString = index === 0 ? curr : acc + ' / ' + curr;
       return variantString
     })
 
