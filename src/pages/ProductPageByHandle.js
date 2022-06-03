@@ -1,55 +1,17 @@
 import { useParams } from 'react-router'
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import ProductGallery from '../Components/ProductGallery';
-import SelectVariant from '../Components/SelectVariant';
+import SelectVariant from '../Components/ProductInfo';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import '../styles/product-page.css';
+import PRODUCT_QUERY_BY_HANDLE from '../query/productByHandle';
 
 const ProductPage = () => {
   let { handle } = useParams();
   const handleForQuery = (handle).toString();
-  const PRODUCT_QUERY = gql`
-  query Product($handleForQuery: String!) {
-    product(handle: $handleForQuery) {
-        descriptionHtml
-        handle
-        title
-        id
-        images(first: 250) {
-          edges {
-            node {
-              src
-              altText
-            }
-          }
-        }
-        variants(first: 250) {
-          edges {
-            node {
-              priceV2 {
-                amount
-                currencyCode
-              }
-              compareAtPriceV2 {
-                amount
-                currencyCode
-              }
-              id
-              title
-              selectedOptions {
-                name
-                value
-              }
-            }
-          }
-        
-      }
-    }
-  }
-`;
 
   // Get product by ID
-  const { data, loading, error } = useQuery(PRODUCT_QUERY, {
+  const { data, loading, error } = useQuery(PRODUCT_QUERY_BY_HANDLE, {
     variables: { handleForQuery }
   });
   if (loading && !data) return "Loading...";
