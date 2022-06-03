@@ -1,55 +1,17 @@
 import { useParams } from 'react-router'
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import ProductGallery from '../Components/ProductGallery';
-import SelectVariant from '../Components/SelectVariant';
+import SelectVariant from '../Components/ProductInfo';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import '../styles/product-page.css';
+import PRODUCT_QUERY_BY_ID from '../query/productById';
 
 const ProductPage = () => {
   let { id } = useParams();
   const idForQuery = ("gid://shopify/Product/" + id).toString();
-  const PRODUCT_QUERY = gql`
-  query Product($idForQuery: ID!) {
-    product(id: $idForQuery) {
-        descriptionHtml
-        handle
-        title
-        id
-        images(first: 250) {
-          edges {
-            node {
-              src
-              altText
-            }
-          }
-        }
-        variants(first: 250) {
-          edges {
-            node {
-              priceV2 {
-                amount
-                currencyCode
-              }
-              compareAtPriceV2 {
-                amount
-                currencyCode
-              }
-              id
-              title
-              selectedOptions {
-                name
-                value
-              }
-            }
-          }
-        
-      }
-    }
-  }
-`;
 
   // Get product by ID
-  const { data, loading, error } = useQuery(PRODUCT_QUERY, {
+  const { data, loading, error } = useQuery(PRODUCT_QUERY_BY_ID, {
     variables: { idForQuery }
   });
   if (loading && !data) return "Loading...";
@@ -118,7 +80,7 @@ const ProductPage = () => {
         </>
         :
         <h1 className='product-error-message'>
-          Wrong product handle
+          Wrong product ID
         </h1>
       }
     </div>

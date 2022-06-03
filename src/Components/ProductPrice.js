@@ -1,16 +1,20 @@
 import React from "react";
 
-const ProductPrice = (price) => {
+const ProductPrice = (props) => {
 
   return (
     <div className="product-price">
       <div className="product-price__new">
-        New price: {price.price}
+        New price: {props.price}
       </div>
-      <div className="product-price__old">
-        Old price: {price.comparePrice}
-      </div>
-
+      {
+        props.comparePrice != "" ?
+          <div className="product-price__old">
+            Old price: {props.comparePrice}
+          </div>
+          :
+          ""
+      }
     </div>
   )
 };
